@@ -1,0 +1,49 @@
+﻿
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #343a40, #495057);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1557804506-669a67965ba0');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+
+.card-custom {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .card-custom:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+footer {
+    background-color: #343a40;
+    color: white;
+}

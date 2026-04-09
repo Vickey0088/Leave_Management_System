@@ -1,0 +1,52 @@
+﻿@* @model LASMSProject.Models.SalaryStructure
+
+@{
+    ViewData["Title"] = "Set Employee Salary";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Set Salary Structure</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="SetSalary" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Select Employee</label>
+                    <select asp-for="EmployeeId" class="form-select" asp-items="ViewBag.Employees">
+                        <option value="">-- Choose Employee --</option>
+                    </select>
+                    <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Basic Salary (₹)</label>
+                    <input asp-for="BasicSalary" class="form-control" type="number" step="0.01" placeholder="e.g. 50000" />
+                    <span asp-validation-for="BasicSalary" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">HRA (₹)</label>
+                        <input asp-for="HRA" class="form-control" type="number" step="0.01" placeholder="House Rent" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">DA (₹)</label>
+                        <input asp-for="DA" class="form-control" type="number" step="0.01" placeholder="Dearness Allowance" />
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">Save Salary Structure</button>
+                    <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

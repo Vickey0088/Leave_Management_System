@@ -1,0 +1,47 @@
+﻿@* @{
+    ViewData["Title"] = "Process Monthly Salary";
+}
+
+<div class="container mt-5 text-center" style="max-width: 500px;">
+    <h2>Process Salary</h2>
+    <p class="text-muted">Calculate salary for all employees based on attendance.</p>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <i class="fa-solid fa-check-circle"></i> @ViewBag.Message
+        </div>
+    }
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-body p-4">
+            <form asp-action="ProcessSalary" method="post">
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label class="form-label">Month</label>
+                        <select name="month" class="form-select">
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i" selected="@(DateTime.Now.Month == i)">
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Year</label>
+                        <select name="year" class="form-select">
+                            <option value="2025">2025</option>
+                            <option value="2026" selected>2026</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="fa-solid fa-gears"></i> Run Calculation
+                </button>
+            </form>
+        </div>
+    </div>
+</div> *@

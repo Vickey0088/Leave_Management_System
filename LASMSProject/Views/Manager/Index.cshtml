@@ -1,0 +1,82 @@
+﻿@model IEnumerable<LASMSProject.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "Manager Dashboard";
+}
+
+<div class="container mt-4">
+    <h2>Manager Dashboard</h2>
+    <p class="text-muted">Review and manage pending leave requests.</p>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Pending Approvals</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Employee</th>
+                        <th>Leave Type</th>
+                        <th>Dates</th>
+                        <th>Days</th>
+                        <th>Reason</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <i class="fa-solid fa-check-circle fa-2x mb-2"></i><br />
+                                No pending requests found. Good job!
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@item.Employee.FullName</strong><br />
+                                    <small class="text-muted">@item.Employee.EmployeeCode</small>
+                                </td>
+                                <td><span class="badge bg-info text-dark">@item.LeaveType.Name</span></td>
+                                <td>
+                                    @item.StartDate.ToString("MMM dd") - @item.EndDate.ToString("MMM dd, yyyy")
+                                </td>
+                                <td>@item.TotalDays</td>
+                                <td>@item.Reason</td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <form asp-action="Approve" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-success btn-sm me-1" onclick="return confirm('Approve this leave?');">
+                                                <i class="fa-solid fa-check"></i> Approve
+                                            </button>
+                                        </form>
+
+                                        <form asp-action="Reject" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Reject this leave?');">
+                                                <i class="fa-solid fa-xmark"></i> Reject
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

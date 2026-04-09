@@ -1,0 +1,122 @@
+﻿@model LASMSProject.Models.ViewModels.EmployeeDashboardViewModel
+
+@{
+    ViewData["Title"] = "My Dashboard";
+}
+
+
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Dashboard</h2>
+        <a asp-action="Apply" class="btn btn-primary">+ Apply New Leave</a>
+    </div>
+
+    <div class="row mb-4">
+        @foreach (var item in Model.Balances)
+        {
+            var cardClass = item.LeaveType.IsPaid ? "text-primary" : "text-danger";
+            var borderClass = item.LeaveType.IsPaid ? "border-primary" : "border-danger";
+            var title = item.LeaveType.Name;
+
+//---------------------------
+            bool isLOP = item.LeaveType.Name == "Loss of Pay" || !item.LeaveType.IsPaid;
+
+            // 2. MAGIC LOGIC: Agar LOP hai AUR Used 0 hai -> To ise HIDE kardo
+            if (isLOP && item.Used == 0)
+            {
+                continue; // Skip this card
+            }
+
+            // 3. Styling setup (LOP Red dikhega, Baaki Blue)
+            var borderClass2 = isLOP ? "border-danger" : "border-primary";
+
+            <div class="col-md-3">
+                <div class="card text-center shadow-sm @borderClass2 mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted">@item.LeaveType.Name</h5>
+
+                        @if (isLOP)
+                        {
+                            <h2 class="display-4 text-danger">@item.Used</h2>
+                            <p class="card-text text-danger fw-bold">Days Deducted (Salary Cut)</p>
+                        }
+                        else
+                        {
+                            <h2 class="display-4 text-primary">@item.Remaining</h2>
+                            <p class="card-text text-muted">Days Remaining</p>
+                        }
+                    </div>
+                </div>
+            </div>
+//----------------------------------
+
+            @* <div class="col-md-3">
+                <div class="card text-center shadow-sm @borderClass mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted">@title</h5>
+
+                        @if (item.LeaveType.IsPaid)
+                        {
+                            <h2 class="display-4 @cardClass">@item.Remaining</h2>
+                            <p class="card-text text-muted">Days Remaining</p>
+                        }
+                        else
+                        {
+                            <h2 class="display-4 text-danger">@item.Used</h2>
+                            <p class="card-text text-danger fw-bold">Days Deducted (LOP)</p>
+                        }
+                    </div>
+                </div>
+            </div> *@
+        }
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Recent Requests</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Days</th>
+                        <th>Status</th>
+                        <th>Applied On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var req in Model.RecentRequests)
+                    {
+                        <tr>
+                            <td>@req.LeaveType.Name</td>
+                            <td>@req.StartDate.ToShortDateString()</td>
+                            <td>@req.EndDate.ToShortDateString()</td>
+                            <td>@req.TotalDays</td>
+                            <td>
+                                @if (req.Status == "Approved")
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else if (req.Status == "Rejected")
+                                {
+
+                                    <span class="badge bg-danger">Rejected</span>
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                            </td>
+                            <td>@req.AppliedOn.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Admin Dashboard</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-black border  mb-3">
+                <div class="card-header">Total Employees</div>
+                <div class="card-body">
+                    <h3 class="card-title">@ViewBag.TotalEmployees</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-black  border  mb-3">
+                <div class="card-header">Departments</div>
+                <div class="card-body">
+                    <h3 class="card-title">@ViewBag.TotalDepartments</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-black border mb-3">
+                <div class="card-header">Pending Requests</div>
+                <div class="card-body">
+                    <h3 class="card-title">@ViewBag.PendingRequests</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Quick Actions</div>
+                <div class="card-body">
+                    <h5 class="card-title">Employee Management</h5>
+                    <a asp-action="CreateEmployee" class="btn btn-secondary w-100 mb-2">Register New Employee</a>
+
+                    @* <h5 class="card-title mt-3">Payroll</h5>
+                    <a asp-controller="Salary" asp-action="SetSalary" class="btn btn-warning w-100 mb-2 text-dark">Set Employee Salary</a>
+                    <a asp-controller="Salary" asp-action="ProcessSalary" class="btn btn-success w-100">Process Monthly Salary</a> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

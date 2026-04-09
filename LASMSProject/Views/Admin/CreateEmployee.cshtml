@@ -1,0 +1,94 @@
+﻿@model LASMSProject.Models.ViewModels.RegisterViewModel
+
+<div class="container mt-4">
+    <h2>Register New Employee</h2>
+    <hr />
+    <form asp-action="CreateEmployee" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label>First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label>Employee Code</label>
+                    <input asp-for="EmployeeCode" class="form-control" placeholder="EMP001" />
+                    <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Joining Date</label>
+                    <input asp-for="JoiningDate" class="form-control" />
+                    <span asp-validation-for="JoiningDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Department</label>
+                    <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.Departments">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Designation</label>
+                    <select asp-for="DesignationId" class="form-control" asp-items="ViewBag.Designations">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Register Employee</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $(".btn").click(function(){
+
+                var user = {
+                    FirstName: $("#FirstName").val(),
+                    LastName: $("#LastName").val(),
+                    Email: $("#Email").val(),
+                    Password: $("#Password").val(),
+                    EmployeeCode: $("#EmployeeCode").val(),
+                    JoiningDate: $("#JoiningDate").val(),
+                    DepartmentId: $("#DepartmentId").val(),
+					DesignationId: $("#DesignationId").val()
+                };
+
+                $.post("/Admin/CreateEmployee", user, function(result){
+                    if(result.success){
+                        alert("Employee registered successfully!");
+                        window.location = "/Admin/Index";
+                    }
+                    else{
+                        alert("Error: " + result.message);
+                    }
+
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,59 @@
+﻿@* @model IEnumerable<LASMSProject.Models.MonthlySalary>
+@{
+    ViewData["Title"] = "My Payslips";
+}
+
+<div class="container mt-4">
+    <h2>My Salary History</h2>
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No Generation of any Salary Slips.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive shadow-sm">
+            <table class="table table-bordered table-hover">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Month/Year</th>
+                        <th>Basic Salary</th>
+                        <th>Allowances</th>
+                        <th>Unpaid Days (LOP)</th>
+                        <th>Deduction Amount</th>
+                        <th>Net Salary (In Hand)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month)</strong>
+                                @item.Year
+                            </td>
+                            <td>₹@item.BasicSalary.ToString("N0")</td>
+                            <td>₹@item.TotalAllowances.ToString("N0")</td>
+
+                            <td class="@(item.TotalUnpaidDays > 0 ? "text-danger fw-bold" : "")">
+                                @item.TotalUnpaidDays Days
+                            </td>
+                            <td class="text-danger">
+                                - ₹@item.LOPDeduction.ToString("N0")
+                            </td>
+
+                            <td class="bg-light fw-bold text-success">
+                                ₹@item.NetSalary.ToString("N0")
+                            </td>
+                            <td class="text-muted small">@item.ProcessedDate.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div> *@
